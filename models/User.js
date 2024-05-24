@@ -2,7 +2,6 @@
 // We need to include references to the thoughts and friends (users)
 
 const {Schema, model}= require('mongoose');
-const thoughtSchema= require('./Thought');
 
 const userSchema= new Schema({
     username:{
