@@ -10,6 +10,7 @@ module.exports={
     async getUsers(req, res){
         try{
             const users= await User.find();
+            console.log('All Users', users)
             res.json (users);
         }
         catch (err){
@@ -20,7 +21,7 @@ module.exports={
     // GET Routes for single user by id
     async getSingleUser (req, res){
         try{
-            const user= await User.findOne({_id:req.params.userId})
+            const userId= await User.findOne({_id:req.params.userId})
             .populate('thoughts')
             .populate('friends')
             res.json(user);
@@ -28,6 +29,17 @@ module.exports={
         catch (err){
             res.status(500).json({message: 'Could not find user'})
             console.log('Could not find user');
+        }
+    },
+    // POST Routes for user
+    async createUser (req, res){
+        try{
+            const user= await User.create(req.body);
+            res.json(user);
+        }
+        catch (err){
+            res.status(500).json({message: 'Could not create user'})
+            console.log('Could not create user');
         }
     },
     // PUT Routes for user
@@ -65,6 +77,7 @@ module.exports={
                 return res.status(404).json({message: 'Could not find user'});
             }
             res.json(user);
+            console.log('Added friend');
         }
         catch (err){
             res.status (500)({message: 'Could not add friend'});
